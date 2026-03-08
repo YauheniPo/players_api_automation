@@ -2,6 +2,9 @@
 
 REST API test automation framework built with **Kotlin + RestAssured + TestNG + Allure**.
 
+CI pipeline: https://github.com/YauheniPo/players_api_automation/actions
+Issues/Tickets: https://github.com/YauheniPo/players_api_automation/issues
+
 ---
 
 ## Tech Stack
