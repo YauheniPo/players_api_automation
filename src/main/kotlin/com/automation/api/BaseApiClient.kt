@@ -19,9 +19,15 @@ abstract class BaseApiClient {
             .build()
     }
 
-    private fun baseSpecBuilder(): RequestSpecBuilder =
-        RequestSpecBuilder()
-            .setBaseUri(ConfigProvider.config.baseUrl())
+    private fun baseSpecBuilder(): RequestSpecBuilder {
+        val baseUrl = ConfigProvider.config.baseUrl()
+        require(baseUrl.isNotBlank()) {
+            "base.url is not configured. Set BASE_URL env var, -Dbase.url JVM property, " +
+                "or add it to src/main/resources/config.local.properties"
+        }
+        return RequestSpecBuilder()
+            .setBaseUri(baseUrl)
             .setContentType(ContentType.JSON)
             .log(LogDetail.ALL)
+    }
 }
