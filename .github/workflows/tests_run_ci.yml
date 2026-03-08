@@ -37,3 +37,11 @@ jobs:
           path: build/allure-results/
           retention-days: 7
 
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: build/reports/tests/test/
+          retention-days: 7
+
