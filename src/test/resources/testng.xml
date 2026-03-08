@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<!--
-  parallel="tests": each <test> block runs in its own thread concurrently.
-  Within each <test>, methods run sequentially — dependsOnGroups works correctly.
-  AuthTest runs in parallel with PlayerTest's sequential lifecycle.
--->
 <suite name="Players API Suite" verbose="1" parallel="tests" thread-count="4">
 
     <test name="Auth Tests">
