@@ -1,0 +1,21 @@
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{40} — %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Suppress noisy RestAssured / Apache HTTP internals -->
+    <logger name="org.apache.http"           level="WARN"/>
+    <logger name="io.restassured"            level="WARN"/>
+    <logger name="com.github.tomakehurst"    level="WARN"/>
+
+    <!-- Framework classes log at INFO -->
+    <logger name="com.automation" level="INFO"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

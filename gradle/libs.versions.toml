@@ -1,0 +1,31 @@
+[versions]
+kotlin        = "1.9.23"
+restAssured   = "5.4.0"
+testNg        = "7.12.0"
+jackson       = "2.17.0"
+allure        = "2.27.0"
+logback       = "1.5.3"
+slf4j         = "2.0.13"
+faker         = "2.2.2"
+owner         = "1.0.12"
+aspectj       = "1.9.22"
+assertj       = "3.25.3"
+ktlint-plugin = "12.1.1"
+
+[libraries]
+restassured-core       = { module = "io.rest-assured:rest-assured",                         version.ref = "restAssured" }
+jackson-databind       = { module = "com.fasterxml.jackson.core:jackson-databind",          version.ref = "jackson"     }
+jackson-kotlin         = { module = "com.fasterxml.jackson.module:jackson-module-kotlin",   version.ref = "jackson"     }
+owner                  = { module = "org.aeonbits.owner:owner",                             version.ref = "owner"       }
+datafaker              = { module = "net.datafaker:datafaker",                              version.ref = "faker"       }
+slf4j-api              = { module = "org.slf4j:slf4j-api",                                 version.ref = "slf4j"       }
+logback-classic        = { module = "ch.qos.logback:logback-classic",                      version.ref = "logback"     }
+testng                 = { module = "org.testng:testng",                                   version.ref = "testNg"      }
+assertj-core           = { module = "org.assertj:assertj-core",                            version.ref = "assertj"     }
+allure-restassured     = { module = "io.qameta.allure:allure-rest-assured",                version.ref = "allure"      }
+allure-testng          = { module = "io.qameta.allure:allure-testng",                      version.ref = "allure"      }
+aspectjweaver          = { module = "org.aspectj:aspectjweaver",                           version.ref = "aspectj"     }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm",            version.ref = "kotlin"        }
+ktlint     = { id = "org.jlleitschuh.gradle.ktlint",        version.ref = "ktlint-plugin" }
