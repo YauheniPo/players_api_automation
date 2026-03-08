@@ -67,6 +67,12 @@ dependencies {
 fun Test.applyTestConfig() {
     jvmArgs("-javaagent:${aspectjAgent.singleFile}")
     systemProperty("allure.results.directory", "${layout.buildDirectory.get()}/allure-results")
+
+    // Forward -D properties from the Gradle JVM into the test worker JVM
+    listOf("base.url", "admin.login", "admin.password").forEach { key ->
+        System.getProperty(key)?.let { systemProperty(key, it) }
+    }
+
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
     testLogging {
         events("passed", "skipped", "failed")
