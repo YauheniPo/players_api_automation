@@ -22,7 +22,7 @@ abstract class BaseApiClient {
     private fun baseSpecBuilder(): RequestSpecBuilder {
         val baseUrl = ConfigProvider.config.baseUrl()
         require(baseUrl.isNotBlank()) {
-            "base.url is not configured. Set BASE_URL env var, -Dbase.url JVM property, " +
+            "base.url is not configured. Set -Dbase.url JVM property " +
                 "or add it to src/main/resources/config.local.properties"
         }
         return RequestSpecBuilder()

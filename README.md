@@ -205,14 +205,6 @@ admin.password=your_password
 
 ### CI / командная строка
 
-Через переменные окружения:
-```bash
-BASE_URL=https://your-env.example.com \
-ADMIN_LOGIN=your@email.com \
-ADMIN_PASSWORD=your_password \
-./gradlew test
-```
-
 Через JVM-флаги `-D`:
 ```bash
 ./gradlew test \
