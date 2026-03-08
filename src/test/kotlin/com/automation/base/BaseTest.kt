@@ -25,10 +25,12 @@ abstract class BaseTest {
 
     @BeforeSuite(alwaysRun = true)
     fun globalSetUp() {
-        configureRestAssured()
-        if (TestContext.authToken == null) {
-            log.info("BeforeSuite: fetching auth token...")
-            authenticate()
+        synchronized(BaseTest::class.java) {
+            configureRestAssured()
+            if (TestContext.authToken == null) {
+                log.info("BeforeSuite: fetching auth token...")
+                authenticate()
+            }
         }
     }
 

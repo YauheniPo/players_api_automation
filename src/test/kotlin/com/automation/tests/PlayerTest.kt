@@ -1,7 +1,6 @@
 package com.automation.tests
 
 import com.automation.base.BaseTest
-import com.automation.dto.request.PlayerRequestDTO
 import com.automation.dto.request.PlayerRequestOneDTO
 import com.automation.dto.response.PlayerResponseDTO
 import com.automation.utils.DataGenerator
@@ -12,7 +11,6 @@ import io.qameta.allure.Story
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.SoftAssertions
 import org.testng.annotations.AfterClass
-import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 
 @Feature("Player Management")
@@ -23,14 +21,7 @@ class PlayerTest : BaseTest() {
 
     // ── 1. Create 12 players ─────────────────────────────────────────────────
 
-    @DataProvider(name = "playerData", parallel = true)
-    fun playerData(): Array<Array<Any>> =
-        DataGenerator.generatePlayers(PLAYERS_COUNT)
-            .map { arrayOf<Any>(it) }
-            .toTypedArray()
-
     @Test(
-        dataProvider = "playerData",
         groups = ["create"],
         description = "Register $PLAYERS_COUNT players in parallel and verify 2xx + response body",
     )
@@ -39,9 +30,11 @@ class PlayerTest : BaseTest() {
         "POST /api/automationTask/create x$PLAYERS_COUNT (parallel)\n" +
             "Expected: 2xx response, body contains required fields.",
     )
-    fun createPlayers(request: PlayerRequestDTO) {
-        val created = playerApiClient().createPlayer(request).assertSuccess()
-        TestContext.addCreatedPlayer(created)
+    fun createPlayers() {
+        DataGenerator.generatePlayers(PLAYERS_COUNT)
+            .parallelStream()
+            .map { playerApiClient().createPlayer(it).assertSuccess() }
+            .forEach { TestContext.addCreatedPlayer(it) }
     }
 
     // ── 2. Get one player profile ─────────────────────────────────────────────
