@@ -15,7 +15,7 @@ object DataGenerator {
         val suffix = "${idx}_${faker.number().digits(4)}"
 
         return PlayerRequestDTO(
-            currencyCode = faker.currency().code(),
+            currencyCode = faker.money().currencyCode(),
             email = "player_$suffix@automation.test",
             name = faker.name().firstName().letters(fallback = "TestName"),
             surname = faker.name().lastName().letters(fallback = "TestSurname"),

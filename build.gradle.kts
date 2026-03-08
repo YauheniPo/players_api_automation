@@ -67,7 +67,15 @@ dependencies {
 fun Test.applyTestConfig() {
     jvmArgs("-javaagent:${aspectjAgent.singleFile}")
     systemProperty("allure.results.directory", "${layout.buildDirectory.get()}/allure-results")
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+
+    // Forward -D properties from the Gradle JVM into the test worker JVM
+    listOf("base.url", "admin.login", "admin.password").forEach { key ->
+        System.getProperty(key)?.let { systemProperty(key, it) }
+    }
+
+    // Parallelism is handled by TestNG (parallel="tests" in testng.xml).
+    // Multiple Gradle forks would run the entire suite N times.
+    maxParallelForks = 1
     testLogging {
         events("passed", "skipped", "failed")
         showStandardStreams = false

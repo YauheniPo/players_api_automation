@@ -1,0 +1,60 @@
+name: Kotlin tests runner CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Validate required secrets
+        run: |
+          missing=()
+          [[ -z "${{ secrets.BASE_URL }}" ]]       && missing+=("BASE_URL")
+          [[ -z "${{ secrets.ADMIN_LOGIN }}" ]]    && missing+=("ADMIN_LOGIN")
+          [[ -z "${{ secrets.ADMIN_PASSWORD }}" ]] && missing+=("ADMIN_PASSWORD")
+          if [[ ${#missing[@]} -gt 0 ]]; then
+            echo "ERROR: The following repository secrets are not set: ${missing[*]}"
+            echo "Go to: Settings → Secrets and variables → Actions → New repository secret"
+            exit 1
+          fi
+          echo "All required secrets are present."
+
+      - name: Run tests
+        run: |
+          ./gradlew test \
+            -Dbase.url="${{ secrets.BASE_URL }}" \
+            -Dadmin.login="${{ secrets.ADMIN_LOGIN }}" \
+            -Dadmin.password="${{ secrets.ADMIN_PASSWORD }}"
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: build/allure-results/
+          retention-days: 7
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: build/reports/tests/test/
+          retention-days: 7
+
