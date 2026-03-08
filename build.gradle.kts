@@ -73,7 +73,9 @@ fun Test.applyTestConfig() {
         System.getProperty(key)?.let { systemProperty(key, it) }
     }
 
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+    // Parallelism is handled by TestNG (parallel="tests" in testng.xml).
+    // Multiple Gradle forks would run the entire suite N times.
+    maxParallelForks = 1
     testLogging {
         events("passed", "skipped", "failed")
         showStandardStreams = false
