@@ -1,5 +1,6 @@
 package com.automation.api
 
+import com.automation.dto.StringLengthModule
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.restassured.response.Response
@@ -8,6 +9,7 @@ import io.restassured.response.Response
 internal val listMapper =
     jacksonObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .registerModule(StringLengthModule())
 
 sealed class ApiResponse<out T> {
     data class Success<T>(val data: T) : ApiResponse<T>()
