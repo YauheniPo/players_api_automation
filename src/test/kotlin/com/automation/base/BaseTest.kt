@@ -3,6 +3,7 @@ package com.automation.base
 import com.automation.api.AuthApiClient
 import com.automation.api.PlayerApiClient
 import com.automation.config.ConfigProvider
+import com.automation.dto.StringLengthModule
 import com.automation.dto.request.CredentialsDTO
 import com.automation.utils.TestContext
 import com.fasterxml.jackson.core.StreamReadFeature
@@ -53,6 +54,7 @@ abstract class BaseTest {
             )
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true)
+            .addModule(StringLengthModule())
             .build()
 
         RestAssured.config = RestAssuredConfig.config()
